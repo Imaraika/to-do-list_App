@@ -46,3 +46,13 @@ li {
     justify-content: space-between;
     align-items: center;
 }
+/* Add these styles to the end of your styles.css file */
+
+.completed {
+    background-color: #f0f8ff; /* Light blue background for completed tasks */
+    text-decoration: line-through; /* Strikethrough for completed tasks */
+}
+
+.priority {
+    border: 2px solid #ff8c00; /* Orange border for priority tasks */
+}
