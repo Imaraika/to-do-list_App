@@ -32,34 +32,6 @@ function addTask() {
     }
 }
 
-function changeCategory(select) {
-    const li = select.parentNode;
-    const category = select.value;
-    li.setAttribute("data-category", category);
-    saveTasks(); // Save tasks to local storage after changing category
-}
-
-function saveTasks() {
-    const tasks = Array.from(document.querySelectorAll("#taskList li")).map((task) => {
-        return {
-            html: task.innerHTML,
-            category: task.getAttribute("data-category") || "default",
-        };
-    });
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-function loadTasks() {
-    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    const taskList = document.getElementById("taskList");
-    tasks.forEach((taskData) => {
-        const li = document.createElement("li");
-        li.innerHTML = taskData.html;
-        li.setAttribute("data-category", taskData.category);
-        taskList.appendChild(li);
-    });
-}
-
 function editTask(button) {
     const li = button.parentNode.parentNode;
     const taskText = li.querySelector(".taskText");
@@ -89,3 +61,30 @@ function toggleCompletion(button) {
     saveTasks(); // Save tasks to local storage after toggling completion
 }
 
+function changeCategory(select) {
+    const li = select.parentNode;
+    const category = select.value;
+    li.setAttribute("data-category", category);
+    saveTasks(); // Save tasks to local storage after changing category
+}
+
+function saveTasks() {
+    const tasks = Array.from(document.querySelectorAll("#taskList li")).map((task) => {
+        return {
+            html: task.innerHTML,
+            category: task.getAttribute("data-category") || "default",
+        };
+    });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function loadTasks() {
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const taskList = document.getElementById("taskList");
+    tasks.forEach((taskData) => {
+        const li = document.createElement("li");
+        li.innerHTML = taskData.html;
+        li.setAttribute("data-category", taskData.category);
+        taskList.appendChild(li);
+    });
+}
