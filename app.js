@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    loadTasks(); // Load tasks from local storage on page load
     document.getElementById("taskInput").focus();
 });
 
@@ -20,6 +21,8 @@ function addTask() {
         taskList.appendChild(li);
         taskInput.value = "";
         taskInput.focus();
+
+        saveTasks(); // Save tasks to local storage
     }
 }
 
@@ -30,20 +33,39 @@ function editTask(button) {
 
     if (newTask !== null) {
         taskText.innerText = newTask;
+        saveTasks(); // Save tasks to local storage after editing
     }
 }
 
 function deleteTask(button) {
     const li = button.parentNode.parentNode;
     li.parentNode.removeChild(li);
+    saveTasks(); // Save tasks to local storage after deletion
 }
 
 function togglePriority(button) {
     const li = button.parentNode.parentNode;
     li.classList.toggle("priority");
+    saveTasks(); // Save tasks to local storage after toggling priority
 }
 
 function toggleCompletion(button) {
     const li = button.parentNode.parentNode;
     li.classList.toggle("completed");
+    saveTasks(); // Save tasks to local storage after toggling completion
+}
+
+function saveTasks() {
+    const tasks = Array.from(document.querySelectorAll("#taskList li")).map((task) => task.innerHTML);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function loadTasks() {
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const taskList = document.getElementById("taskList");
+    tasks.forEach((taskHTML) => {
+        const li = document.createElement("li");
+        li.innerHTML = taskHTML;
+        taskList.appendChild(li);
+    });
 }
